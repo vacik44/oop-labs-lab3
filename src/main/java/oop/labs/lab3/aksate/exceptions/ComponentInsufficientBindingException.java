@@ -1,7 +1,7 @@
-package oop.labs.lab3.aksate;
+package oop.labs.lab3.aksate.exceptions;
 
 @SuppressWarnings("unused")
-public class ComponentInsufficientBindingException extends AksateException
+public class ComponentInsufficientBindingException extends InstantiationException
 {
     public ComponentInsufficientBindingException() {}
     public ComponentInsufficientBindingException(String message) { super(message); }

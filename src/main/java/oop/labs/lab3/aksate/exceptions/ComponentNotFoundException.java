@@ -1,4 +1,6 @@
-package oop.labs.lab3.aksate;
+package oop.labs.lab3.aksate.exceptions;
+
+import oop.labs.lab3.aksate.AksateException;
 
 @SuppressWarnings("unused")
 public class ComponentNotFoundException extends AksateException
