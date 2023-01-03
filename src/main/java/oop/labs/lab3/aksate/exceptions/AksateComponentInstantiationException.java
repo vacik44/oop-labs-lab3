@@ -1,6 +1,5 @@
 package oop.labs.lab3.aksate.exceptions;
 
-@SuppressWarnings("unused")
 public class AksateComponentInstantiationException extends AksateComponentException
 {
     public AksateComponentInstantiationException(Class<?> clazz)
@@ -27,7 +26,7 @@ public class AksateComponentInstantiationException extends AksateComponentExcept
     public static AksateComponentInstantiationException forComponent(Class<?> clazz, Throwable cause)
     {
         var msg = "Aksate container internal exception was occurred";
-        msg += String.format(" instantiation of component '%s'", clazz.getName());
+        msg += String.format(" during instantiation of component '%s'", clazz.getName());
 
         return new AksateComponentInstantiationException(clazz, msg, cause);
     }

@@ -5,7 +5,6 @@ import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
 
-@SuppressWarnings("unused")
 public class AksateComponentHasMissingDependenciesException extends AksateComponentInstantiationException
 {
     private final List<Class<?>> missingDependencies;
@@ -36,7 +35,10 @@ public class AksateComponentHasMissingDependenciesException extends AksateCompon
     }
 
 
-    public Collection<Class<?>> getMissingDependency() { return Collections.unmodifiableCollection(missingDependencies); }
+    public Collection<Class<?>> getMissingDependency()
+    {
+        return missingDependencies == null ? null : Collections.unmodifiableCollection(missingDependencies);
+    }
 
 
     public static AksateComponentHasMissingDependenciesException forComponent(Class<?> clazz, Class<?> dependency)

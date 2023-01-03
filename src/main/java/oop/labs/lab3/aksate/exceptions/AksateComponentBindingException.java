@@ -1,7 +1,6 @@
 package oop.labs.lab3.aksate.exceptions;
 
 
-@SuppressWarnings("unused")
 public class AksateComponentBindingException extends AksateComponentException
 {
     public AksateComponentBindingException(Class<?> clazz)

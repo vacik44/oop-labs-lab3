@@ -1,6 +1,7 @@
-package org.fpm.di.example;
+package oop.labs.lab3;
 
 import oop.labs.lab3.aksate.AksateEnvironment;
+import oop.labs.lab3.example.*;
 import org.fpm.di.Container;
 import org.fpm.di.Environment;
 import org.junit.Before;
@@ -9,7 +10,7 @@ import org.junit.Test;
 import static org.junit.Assert.assertNotSame;
 import static org.junit.Assert.assertSame;
 
-public class Example
+public class ExampleTest
 {
 
     private Container container;

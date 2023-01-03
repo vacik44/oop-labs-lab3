@@ -1,4 +1,4 @@
-package org.fpm.di.example;
+package oop.labs.lab3.example;
 
 import javax.inject.Inject;
 

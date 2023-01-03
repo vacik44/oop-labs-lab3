@@ -6,6 +6,7 @@
  */
 plugins {
     id 'java'
+    id 'idea'
 }
 
 group 'oop.labs'
@@ -21,6 +22,55 @@ dependencies {
     // https://mvnrepository.com/artifact/javax.inject/javax.inject
     implementation group: 'javax.inject', name: 'javax.inject', version: '1'
 
-
     testImplementation group: 'junit', name: 'junit', version: '4.12'
+    testImplementation group: 'org.assertj', name: 'assertj-core', version: '3.23.1'
 }
+
+sourceSets {
+    test_integration {
+        java.srcDir "$projectDir/src/test_integration/java"
+        resources.srcDir "$projectDir/src/test-integration/resources"
+        compileClasspath += main.output + test.output
+        runtimeClasspath += main.output + test.output
+    }
+
+    test_unit {
+        java.srcDir "$projectDir/src/test_unit/java"
+        resources.srcDir "$projectDir/src/test-unit/resources"
+        compileClasspath += main.output + test.output
+        runtimeClasspath += main.output + test.output
+    }
+}
+
+idea {
+    module {
+        sourceDirs -= file('src/test_integration/java')
+        testSourceDirs += file('src/test_integration/java')
+    }
+
+    module {
+        sourceDirs -= file('src/test_unit/java')
+        testSourceDirs += file('src/test_unit/java')
+    }
+}
+
+configurations {
+    test_integrationImplementation.extendsFrom testImplementation
+    test_integrationRuntime.extendsFrom testRuntime
+
+    test_unitImplementation.extendsFrom testImplementation
+    test_unitRuntime.extendsFrom testRuntime
+}
+
+task integrationTest(type: Test) {
+    testClassesDirs = sourceSets.test_integration.output.classesDirs
+    classpath = sourceSets.test_integration.runtimeClasspath
+}
+
+task unitTest(type: Test) {
+    testClassesDirs = sourceSets.test_unit.output.classesDirs
+    classpath = sourceSets.test_unit.runtimeClasspath
+}
+
+check.dependsOn integrationTest
+check.dependsOn unitTest

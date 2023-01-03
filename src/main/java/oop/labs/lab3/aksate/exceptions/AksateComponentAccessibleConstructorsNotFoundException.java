@@ -1,6 +1,5 @@
 package oop.labs.lab3.aksate.exceptions;
 
-@SuppressWarnings("unused")
 public class AksateComponentAccessibleConstructorsNotFoundException extends AksateComponentBindingException
 {
     public AksateComponentAccessibleConstructorsNotFoundException(Class<?> clazz)

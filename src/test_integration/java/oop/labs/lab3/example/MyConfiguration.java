@@ -1,4 +1,4 @@
-package org.fpm.di.example;
+package oop.labs.lab3.example;
 
 import org.fpm.di.Binder;
 import org.fpm.di.Configuration;
