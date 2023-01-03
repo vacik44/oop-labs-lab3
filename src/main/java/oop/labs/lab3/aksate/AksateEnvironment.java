@@ -6,7 +6,6 @@ import org.fpm.di.Environment;
 import java.util.HashMap;
 import java.util.Map;
 
-@SuppressWarnings({"unused", "UnusedReturnValue"})
 public class AksateEnvironment implements Environment
 {
     private final Map<AksateFeatures, Boolean> features;

@@ -1,4 +1,3 @@
 package oop.labs.lab3.mimics;
 
-public class ExternalB {
-}
+public class ExternalB {}

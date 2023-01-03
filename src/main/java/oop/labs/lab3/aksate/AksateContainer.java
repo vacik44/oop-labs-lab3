@@ -12,7 +12,6 @@ import java.lang.reflect.Constructor;
 import java.lang.reflect.InvocationTargetException;
 import java.util.*;
 
-@SuppressWarnings("unused")
 public class AksateContainer implements Container, Binder
 {
     private final Map<AksateFeatures, Boolean> features;
@@ -138,7 +137,7 @@ public class AksateContainer implements Container, Binder
 
                 return constructor.newInstance(parameterValues);
             }
-            catch (AksateComponentNotFoundException e)
+            catch (AksateComponentNotFoundException | AksateComponentHasMissingDependenciesException e)
             {
                 throw AksateComponentHasMissingDependenciesException.forComponent(clazz, e.getComponentClazz());
             }
