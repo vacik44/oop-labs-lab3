@@ -1,0 +1,151 @@
+
+
+
+<!DOCTYPE html>
+<html id="htmlId">
+<head>
+  <title>Coverage Report > AksateEnvironment</title>
+  <style type="text/css">
+    @import "../../css/coverage.css";
+    @import "../../css/idea.min.css";
+  </style>
+  <script type="text/javascript" src="../../js/highlight.min.js"></script>
+  <script type="text/javascript" src="../../js/highlightjs-line-numbers.min.js"></script>
+</head>
+
+<body>
+<div class="content">
+<div class="breadCrumbs">
+Current scope:     <a href="../../index.html">all classes</a>
+    <span class="separator">|</span>
+    <a href="../index.html">oop.labs.lab3.aksate</a>
+</div>
+
+<h1>Coverage Summary for Class: AksateEnvironment (oop.labs.lab3.aksate)</h1>
+
+<table class="coverageStats">
+<tr>
+  <th class="name">Class</th>
+<th class="coverageStat 
+">
+  Class, %
+</th>
+<th class="coverageStat 
+">
+  Method, %
+</th>
+<th class="coverageStat 
+">
+  Line, %
+</th>
+</tr>
+<tr>
+  <td class="name">AksateEnvironment</td>
+<td class="coverageStat">
+  <span class="percent">
+    100%
+  </span>
+  <span class="absValue">
+    (1/1)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    100%
+  </span>
+  <span class="absValue">
+    (7/7)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    100%
+  </span>
+  <span class="absValue">
+    (14/14)
+  </span>
+</td>
+</tr>
+
+</table>
+
+<br/>
+<br/>
+
+
+<pre>
+<code class="sourceCode" id="sourceCode">&nbsp;package oop.labs.lab3.aksate;
+&nbsp;
+&nbsp;import org.fpm.di.Configuration;
+&nbsp;import org.fpm.di.Container;
+&nbsp;import org.fpm.di.Environment;
+&nbsp;import java.util.HashMap;
+&nbsp;import java.util.Map;
+&nbsp;
+&nbsp;public class AksateEnvironment implements Environment
+&nbsp;{
+&nbsp;    private final Map&lt;AksateFeatures, Boolean&gt; features;
+&nbsp;
+&nbsp;
+&nbsp;    public AksateEnvironment()
+<b class="fc">&nbsp;    {</b>
+<b class="fc">&nbsp;        features = new HashMap&lt;&gt;();</b>
+&nbsp;
+<b class="fc">&nbsp;        for (var feature: AksateFeatures.class.getEnumConstants())</b>
+<b class="fc">&nbsp;            features.put(feature, false);</b>
+&nbsp;
+<b class="fc">&nbsp;        setup();</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    protected void setup()
+&nbsp;    {
+<b class="fc">&nbsp;        this.enable(AksateFeatures.IGNORE_CONSTRUCTORS_ACCESSIBILITY);</b>
+&nbsp;    }
+&nbsp;
+&nbsp;
+<b class="fc">&nbsp;    public boolean state(AksateFeatures feature) { return features.get(feature); }</b>
+&nbsp;
+<b class="fc">&nbsp;    public AksateEnvironment enable(AksateFeatures feature) { return set(feature, true); }</b>
+<b class="fc">&nbsp;    public AksateEnvironment disable(AksateFeatures feature) { return set(feature, false); }</b>
+&nbsp;
+&nbsp;    public final AksateEnvironment set(AksateFeatures feature, boolean state)
+&nbsp;    {
+<b class="fc">&nbsp;        features.put(feature, state);</b>
+<b class="fc">&nbsp;        return this;</b>
+&nbsp;    }
+&nbsp;
+&nbsp;
+&nbsp;    @Override public Container configure(Configuration configuration)
+&nbsp;    {
+<b class="fc">&nbsp;        var container = new AksateContainer(new HashMap&lt;&gt;(features));</b>
+<b class="fc">&nbsp;        configuration.configure(container);</b>
+<b class="fc">&nbsp;        return container;</b>
+&nbsp;    }
+&nbsp;}
+</code>
+</pre>
+</div>
+
+<script type="text/javascript">
+(function() {
+    var msie = false, msie9 = false;
+    /*@cc_on
+      msie = true;
+      @if (@_jscript_version >= 9)
+        msie9 = true;
+      @end
+    @*/
+
+    if (!msie || msie && msie9) {
+      hljs.highlightAll()
+      hljs.initLineNumbersOnLoad();
+    }
+})();
+</script>
+
+<div class="footer">
+    
+    <div style="float:right;">generated on 2023-01-03 20:17</div>
+</div>
+</body>
+</html>

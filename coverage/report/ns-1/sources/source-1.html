@@ -1,0 +1,390 @@
+
+
+
+<!DOCTYPE html>
+<html id="htmlId">
+<head>
+  <title>Coverage Report > AksateContainer</title>
+  <style type="text/css">
+    @import "../../css/coverage.css";
+    @import "../../css/idea.min.css";
+  </style>
+  <script type="text/javascript" src="../../js/highlight.min.js"></script>
+  <script type="text/javascript" src="../../js/highlightjs-line-numbers.min.js"></script>
+</head>
+
+<body>
+<div class="content">
+<div class="breadCrumbs">
+Current scope:     <a href="../../index.html">all classes</a>
+    <span class="separator">|</span>
+    <a href="../index.html">oop.labs.lab3.aksate</a>
+</div>
+
+<h1>Coverage Summary for Class: AksateContainer (oop.labs.lab3.aksate)</h1>
+
+<table class="coverageStats">
+
+<tr>
+  <th class="name">Class</th>
+<th class="coverageStat 
+">
+  Method, %
+</th>
+<th class="coverageStat 
+">
+  Line, %
+</th>
+</tr>
+<tr>
+  <td class="name">AksateContainer</td>
+<td class="coverageStat">
+  <span class="percent">
+    100%
+  </span>
+  <span class="absValue">
+    (9/9)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    100%
+  </span>
+  <span class="absValue">
+    (18/18)
+  </span>
+</td>
+</tr>
+  <tr>
+    <td class="name">AksateContainer$AbstractionBinding</td>
+<td class="coverageStat">
+  <span class="percent">
+    100%
+  </span>
+  <span class="absValue">
+    (2/2)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    100%
+  </span>
+  <span class="absValue">
+    (6/6)
+  </span>
+</td>
+  </tr>
+  <tr>
+    <td class="name">AksateContainer$Binding</td>
+<td class="coverageStat">
+  <span class="percent">
+    100%
+  </span>
+  <span class="absValue">
+    (1/1)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    100%
+  </span>
+  <span class="absValue">
+    (1/1)
+  </span>
+</td>
+  </tr>
+  <tr>
+    <td class="name">AksateContainer$DefaultBinding</td>
+<td class="coverageStat">
+  <span class="percent">
+    100%
+  </span>
+  <span class="absValue">
+    (6/6)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    94,1%
+  </span>
+  <span class="absValue">
+    (32/34)
+  </span>
+</td>
+  </tr>
+  <tr>
+    <td class="name">AksateContainer$SingletonBinding</td>
+<td class="coverageStat">
+  <span class="percent">
+    100%
+  </span>
+  <span class="absValue">
+    (3/3)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    100%
+  </span>
+  <span class="absValue">
+    (6/6)
+  </span>
+</td>
+  </tr>
+<tr>
+  <td class="name"><strong>Total</strong></td>
+<td class="coverageStat">
+  <span class="percent">
+    100%
+  </span>
+  <span class="absValue">
+    (21/21)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    96,9%
+  </span>
+  <span class="absValue">
+    (63/65)
+  </span>
+</td>
+</tr>
+</table>
+
+<br/>
+<br/>
+
+
+<pre>
+<code class="sourceCode" id="sourceCode">&nbsp;package oop.labs.lab3.aksate;
+&nbsp;
+&nbsp;import oop.labs.lab3.aksate.exceptions.AksateComponentAccessibleConstructorsNotFoundException;
+&nbsp;import oop.labs.lab3.aksate.exceptions.AksateComponentHasMissingDependenciesException;
+&nbsp;import oop.labs.lab3.aksate.exceptions.AksateComponentInstantiationException;
+&nbsp;import oop.labs.lab3.aksate.exceptions.AksateComponentNotFoundException;
+&nbsp;import org.fpm.di.Binder;
+&nbsp;import org.fpm.di.Container;
+&nbsp;import javax.inject.Inject;
+&nbsp;import javax.inject.Singleton;
+&nbsp;import java.lang.reflect.Constructor;
+&nbsp;import java.lang.reflect.InvocationTargetException;
+&nbsp;import java.util.*;
+&nbsp;
+&nbsp;public class AksateContainer implements Container, Binder
+&nbsp;{
+&nbsp;    private final Map&lt;AksateFeatures, Boolean&gt; features;
+&nbsp;    protected final Map&lt;Class&lt;?&gt;, Binding&gt; bindings;
+&nbsp;
+&nbsp;
+&nbsp;    protected AksateContainer(Map&lt;AksateFeatures, Boolean&gt; features)
+<b class="fc">&nbsp;    {</b>
+<b class="fc">&nbsp;        this.bindings = new HashMap&lt;&gt;();</b>
+<b class="fc">&nbsp;        this.features = features;</b>
+&nbsp;    }
+&nbsp;
+&nbsp;
+&nbsp;    @Override public &lt;T&gt; void bind(Class&lt;T&gt; clazz)
+&nbsp;    {
+<b class="fc">&nbsp;        if (clazz == null) throw new NullPointerException();</b>
+&nbsp;
+<b class="fc">&nbsp;        if (clazz.isAnnotationPresent(Singleton.class)) bindings.put(clazz, new SingletonBinding(clazz));</b>
+<b class="fc">&nbsp;        else bindings.put(clazz, new DefaultBinding(clazz));</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    @Override public &lt;T&gt; void bind(Class&lt;T&gt; clazz, Class&lt;? extends T&gt; implementation)
+&nbsp;    {
+<b class="fc">&nbsp;        if (clazz == null || implementation == null) throw new NullPointerException();</b>
+&nbsp;
+<b class="fc">&nbsp;        bindings.put(clazz, new AbstractionBinding(clazz, implementation));</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    @Override public &lt;T&gt; void bind(Class&lt;T&gt; clazz, T instance)
+&nbsp;    {
+<b class="fc">&nbsp;        if (clazz == null || instance == null) throw new NullPointerException();</b>
+&nbsp;
+<b class="fc">&nbsp;        bindings.put(clazz, new SingletonBinding(clazz, instance));</b>
+&nbsp;    }
+&nbsp;
+&nbsp;
+&nbsp;    @SuppressWarnings(&quot;unchecked&quot;)
+&nbsp;    @Override public &lt;T&gt; T getComponent(Class&lt;T&gt; clazz)
+&nbsp;    {
+<b class="fc">&nbsp;        return (T) getComponentObj(clazz);</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    public Object getComponentObj(Class&lt;?&gt; clazz)
+&nbsp;    {
+<b class="fc">&nbsp;        if (clazz == null) throw new NullPointerException();</b>
+&nbsp;
+<b class="fc">&nbsp;        var binding = bindings.get(clazz);</b>
+<b class="fc">&nbsp;        if (binding == null) throw AksateComponentNotFoundException.forComponent(clazz);</b>
+&nbsp;
+<b class="fc">&nbsp;        return binding.getInstance();</b>
+&nbsp;    }
+&nbsp;
+&nbsp;
+<b class="fc">&nbsp;    public boolean containsComponent(Class&lt;?&gt; clazz) { return bindings.containsKey(clazz); }</b>
+<b class="fc">&nbsp;    public boolean containsComponents(Collection&lt;Class&lt;?&gt;&gt; classes) { return bindings.keySet().containsAll(classes); }</b>
+<b class="fc">&nbsp;    public boolean containsComponents(Class&lt;?&gt;[] classes) { return Arrays.stream(classes).allMatch(this::containsComponent); }</b>
+&nbsp;
+&nbsp;
+&nbsp;    protected static abstract class Binding
+&nbsp;    {
+&nbsp;        protected final Class&lt;?&gt; clazz;
+<b class="fc">&nbsp;        protected Binding(Class&lt;?&gt; clazz) { this.clazz = clazz; }</b>
+&nbsp;        public abstract Object getInstance();
+&nbsp;    }
+&nbsp;
+&nbsp;    protected class DefaultBinding extends Binding
+&nbsp;    {
+&nbsp;        private final List&lt;Constructor&lt;?&gt;&gt; candidateConstructors;
+&nbsp;
+&nbsp;
+&nbsp;        public DefaultBinding(Class&lt;?&gt; clazz)
+<b class="fc">&nbsp;        {</b>
+<b class="fc">&nbsp;            super(clazz);</b>
+<b class="fc">&nbsp;            candidateConstructors = getCandidateConstructors(clazz);</b>
+&nbsp;        }
+&nbsp;
+&nbsp;        protected DefaultBinding(Class&lt;?&gt; clazz, boolean initialize)
+<b class="fc">&nbsp;        {</b>
+<b class="fc">&nbsp;            super(clazz);</b>
+<b class="fc">&nbsp;            candidateConstructors = initialize ? getCandidateConstructors(clazz) : null;</b>
+&nbsp;        }
+&nbsp;
+&nbsp;
+&nbsp;        protected void aggregateConstructor(List&lt;Constructor&lt;?&gt;&gt; lst, Constructor&lt;?&gt; constructor)
+&nbsp;        {
+<b class="fc">&nbsp;            if (constructor.canAccess(null) ||</b>
+<b class="fc">&nbsp;                    (features.get(AksateFeatures.IGNORE_CONSTRUCTORS_ACCESSIBILITY)</b>
+<b class="fc">&nbsp;                    &amp;&amp; constructor.trySetAccessible()))</b>
+<b class="fc">&nbsp;                lst.add(constructor);</b>
+&nbsp;        }
+&nbsp;
+&nbsp;        protected List&lt;Constructor&lt;?&gt;&gt; getCandidateConstructors(Class&lt;?&gt; clazz)
+&nbsp;        {
+<b class="fc">&nbsp;            var constructors = new ArrayList&lt;Constructor&lt;?&gt;&gt;();</b>
+&nbsp;
+<b class="fc">&nbsp;            for (var constructor: clazz.getDeclaredConstructors())</b>
+<b class="fc">&nbsp;                if (constructor.isAnnotationPresent(Inject.class))</b>
+<b class="fc">&nbsp;                    aggregateConstructor(constructors, constructor);</b>
+&nbsp;
+<b class="fc">&nbsp;            if (!constructors.isEmpty()) return constructors;</b>
+&nbsp;
+<b class="fc">&nbsp;            for (var constructor: clazz.getDeclaredConstructors())</b>
+<b class="fc">&nbsp;                aggregateConstructor(constructors, constructor);</b>
+&nbsp;
+<b class="fc">&nbsp;            if (!constructors.isEmpty()) return constructors;</b>
+<b class="fc">&nbsp;            throw AksateComponentAccessibleConstructorsNotFoundException.forComponent(clazz);</b>
+&nbsp;        }
+&nbsp;
+&nbsp;
+&nbsp;        @Override public Object getInstance()
+&nbsp;        {
+<b class="fc">&nbsp;            var constructor = getInjectionConstructor(candidateConstructors);</b>
+&nbsp;
+&nbsp;            try
+&nbsp;            {
+<b class="fc">&nbsp;                if (constructor.getParameterCount() == 0) return constructor.newInstance();</b>
+&nbsp;
+<b class="fc">&nbsp;                var parameterTypes = constructor.getParameterTypes();</b>
+<b class="fc">&nbsp;                var parameterValues = new Object[parameterTypes.length];</b>
+&nbsp;
+<b class="fc">&nbsp;                for (var i = 0; i &lt; constructor.getParameterCount(); i++)</b>
+<b class="fc">&nbsp;                    parameterValues[i] = getComponentObj(parameterTypes[i]);</b>
+&nbsp;
+<b class="fc">&nbsp;                return constructor.newInstance(parameterValues);</b>
+&nbsp;            }
+<b class="fc">&nbsp;            catch (AksateComponentNotFoundException | AksateComponentHasMissingDependenciesException e)</b>
+&nbsp;            {
+<b class="fc">&nbsp;                throw AksateComponentHasMissingDependenciesException.forComponent(clazz, e.getComponentClazz());</b>
+&nbsp;            }
+<b class="nc">&nbsp;            catch (InvocationTargetException | InstantiationException | IllegalAccessException e)</b>
+&nbsp;            {
+<b class="nc">&nbsp;                throw AksateComponentInstantiationException.forComponent(clazz, e);</b>
+&nbsp;            }
+&nbsp;        }
+&nbsp;
+&nbsp;        protected Constructor&lt;?&gt; getInjectionConstructor(List&lt;Constructor&lt;?&gt;&gt; constructors)
+&nbsp;        {
+<b class="fc">&nbsp;            for (var constructor: constructors)</b>
+<b class="fc">&nbsp;                if (containsComponents(constructor.getParameterTypes()))</b>
+<b class="fc">&nbsp;                    return constructor;</b>
+&nbsp;
+<b class="fc">&nbsp;            throw AksateComponentHasMissingDependenciesException.forComponent(clazz);</b>
+&nbsp;        }
+&nbsp;    }
+&nbsp;
+&nbsp;    protected class SingletonBinding extends DefaultBinding
+&nbsp;    {
+&nbsp;        private Object instance;
+&nbsp;
+&nbsp;
+<b class="fc">&nbsp;        public SingletonBinding(Class&lt;?&gt; clazz) { super(clazz); }</b>
+&nbsp;        public SingletonBinding(Class&lt;?&gt; clazz, Object instance)
+<b class="fc">&nbsp;        {</b>
+<b class="fc">&nbsp;            super(clazz, false);</b>
+<b class="fc">&nbsp;            this.instance = instance;</b>
+&nbsp;        }
+&nbsp;
+&nbsp;
+&nbsp;        @Override public Object getInstance()
+&nbsp;        {
+<b class="fc">&nbsp;            if (instance == null) { instance = super.getInstance(); }</b>
+<b class="fc">&nbsp;            return instance;</b>
+&nbsp;        }
+&nbsp;    }
+&nbsp;
+&nbsp;    protected class AbstractionBinding extends Binding
+&nbsp;    {
+&nbsp;        private final Class&lt;?&gt; abstraction;
+&nbsp;
+&nbsp;
+&nbsp;        public AbstractionBinding(Class&lt;?&gt; clazz, Class&lt;?&gt; abstraction)
+<b class="fc">&nbsp;        {</b>
+<b class="fc">&nbsp;            super(clazz);</b>
+<b class="fc">&nbsp;            this.abstraction = abstraction;</b>
+&nbsp;        }
+&nbsp;
+&nbsp;
+&nbsp;        @Override public Object getInstance()
+&nbsp;        {
+&nbsp;            try
+&nbsp;            {
+<b class="fc">&nbsp;                return getComponentObj(abstraction);</b>
+&nbsp;            }
+<b class="fc">&nbsp;            catch (AksateComponentNotFoundException e)</b>
+&nbsp;            {
+<b class="fc">&nbsp;                throw AksateComponentHasMissingDependenciesException.forComponent(clazz, e.getComponentClazz());</b>
+&nbsp;            }
+&nbsp;        }
+&nbsp;    }
+&nbsp;}
+</code>
+</pre>
+</div>
+
+<script type="text/javascript">
+(function() {
+    var msie = false, msie9 = false;
+    /*@cc_on
+      msie = true;
+      @if (@_jscript_version >= 9)
+        msie9 = true;
+      @end
+    @*/
+
+    if (!msie || msie && msie9) {
+      hljs.highlightAll()
+      hljs.initLineNumbersOnLoad();
+    }
+})();
+</script>
+
+<div class="footer">
+    
+    <div style="float:right;">generated on 2023-01-03 20:17</div>
+</div>
+</body>
+</html>
